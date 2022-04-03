@@ -8,9 +8,16 @@ html
     meta(charset='UTF-8')
     title Fon1us
     link(rel='stylesheet' href='/stylesheets/style.css')
-    script(src='/javascripts/controller.js')
     script(src='https://code.jquery.com/jquery-3.6.0.min.js')
   body
+    .container0
+      .jumbotron
+        form(action='/admin' method='POST')
+          input#search.form-control(placeholder='Search' type='text' name='search')
+          
+          input.btn.btn-light(type='submit' value='Home', name='home')
+          
+          input.btn.btn-light(type='submit' value='Download', name='download')
     .container1
       .jumbotron
         p Fon1us

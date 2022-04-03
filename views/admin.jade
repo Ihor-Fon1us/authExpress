@@ -13,9 +13,11 @@ html
         h1.display-4 ADMIN
         br
         form(action='/admin' method='POST')
-          input#name.form-control(placeholder='USER_ID' type='text' name='id')
+          input#name.form-control(placeholder='USER_ID' type='text' name='dellId')
           br
-          input.btn.btn-danger(type='submit' value='Del user')
+          input.btn.btn-danger(type='submit' value='Del user', name='dellOneUser')
+          br
+          input.btn.btn-danger(type='submit' value='Del all user', name='dellAllUser')
 
       #messages
     

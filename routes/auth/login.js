@@ -18,7 +18,7 @@ const login = () => {
           if(!user.comparePassword(req.body.password, user.hashPassword)) {
               res.status(401).json({ message: 'Auth failed. Wrong password'})
           } else {
-              const token = jsonwebtoken.sign({email: user.email, username: user.name, _id: user._id}, conf.costJWT);
+              const token = jsonwebtoken.sign({email: user.email, name: user.name, _id: user._id}, conf.costJWT);
               return  res.cookie('accessToken', token, {maxAge: 360000, secure: false, httpOnly: true}).redirect('/')
           }
       }

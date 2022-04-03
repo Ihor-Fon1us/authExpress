@@ -5,8 +5,6 @@ const validatorUserSchema = require('../models/validator/userSchema');
 const Ajv = require("ajv")
 const ajv = new Ajv()
 const jsonwebtoken = require('jsonwebtoken');
-const conf = require('../bin/config/config');
-const { redirect } = require('express/lib/response');
 const userController = require('../controller/userController')
 
 
@@ -14,7 +12,7 @@ router.route('/')
   .get( async (req, res, next) => {
     try {
       if(req.user) {
-        res.render('index', {title: 'Express'});
+        next();
       } else if(!req.user) {
         res.redirect('login')
       } else {
@@ -23,12 +21,12 @@ router.route('/')
     } catch (error) {
       next(error)
     }
-    
-    //res.clearCookie('foo');
-    //await UserService.removeAll()
+  }, userController.loginRequired(), (req, res, next) => {
+    res.render('index', {title: 'Express'});
   })
-  /* .post((req, res, next) => {
-
-  }) */
+  .post(async (req, res, next) => {
+    //const id = req.body.id;
+    //await UserService.remove(id)
+  }) 
 
 module.exports = router;

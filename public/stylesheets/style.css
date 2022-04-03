@@ -12,6 +12,14 @@ a {
   color: #00B7FF;
 }
 
+div.container0 {
+  background: black;
+  color: white;
+  position: absolute;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 1em; }
+
 div.container1 {
   background: black;
   color: white;
