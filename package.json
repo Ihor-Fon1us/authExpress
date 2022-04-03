@@ -1,0 +1,37 @@
+{
+  "name": "mcfon1us",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "s": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "test": "cross-env DATABASE_URI=mongodb://localhost:27017/recipe_app_test jest --collectCoverage --forceExit --detectOpenHandles"
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "^1.11.0",
+    "jquery": "^3.6.0",
+    "jsdom": "^19.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.8",
+    "morgan": "~1.9.1",
+    "nodemailer": "^6.7.3",
+    "npm": "^8.5.5"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "author": "Ihor Rakytin",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
+  }
+}

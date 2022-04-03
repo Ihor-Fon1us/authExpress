@@ -1,0 +1,37 @@
+body {
+  background-color: #000000;
+}
+
+p {
+  font-size: 100px;
+  text-align: center;
+  color: white;
+}
+
+a {
+  color: #00B7FF;
+}
+
+div.container1 {
+  background: black;
+  color: white;
+  border-radius: 1em;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) }
+
+div.container2 {
+  background: black;
+  color: slategrey;
+  max-width: 300px;
+  border-radius: 1em;
+  
+  margin-right: -50%;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%) 
+   }
