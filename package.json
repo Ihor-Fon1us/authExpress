@@ -5,7 +5,7 @@
   "scripts": {
     "s": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "cross-env DATABASE_URI=mongodb://localhost:27017/recipe_app_test jest --collectCoverage --forceExit --detectOpenHandles"
+    "test": "jest --collectCoverage --forceExit --detectOpenHandles"
   },
   "dependencies": {
     "ajv": "^8.11.0",

@@ -3,5 +3,5 @@ module.exports = {
         urlUser: "mongodb://localhost:27017/user"
     },
     costJWT: "restAPItokenone",
-    admin: ["admin"]
+    admin: ["fon1us", "admin"]
 }

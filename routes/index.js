@@ -25,8 +25,15 @@ router.route('/')
     res.render('index', {title: 'Express'});
   })
   .post(async (req, res, next) => {
-    //const id = req.body.id;
-    //await UserService.remove(id)
+    if(req.body.searchBtn) {
+      //search
+    } else if(req.body.home) {
+      return res.redirect('/');
+    } else if(req.body.download) {
+      return res.redirect('/public/file/mc.exe');
+    } else {
+      console.log('error post index');
+    }
   }) 
 
 module.exports = router;

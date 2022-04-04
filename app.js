@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('file', express.static(path.join(__dirname, 'public/file')));
+app.use('/public/file/mc.exe', express.static(path.join(__dirname, 'public/file/mc.exe')));
 
 app.use('/login', loginRouter);
 app.use('/register', registerRouter); 

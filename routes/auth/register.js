@@ -37,10 +37,11 @@ const register = () =>{
       user.hashPassword = undefined;
       const message = `lalalalala`;
       //await sendEmail(user.email, "Verify Email", message);
-      return res.send("An Email sent to your account please verify");
+      return res.status(200).json({success: true});
     } catch (error) {
       return res.status(400).send({
-        message: error
+        message: error,
+        success: false
       })
     }
   }

@@ -6,6 +6,7 @@ const Ajv = require("ajv")
 const ajv = new Ajv()
 const jsonwebtoken = require('jsonwebtoken');
 const conf = require('../../bin/config/config');
+const bcrypt = require('bcrypt');
 
 
 const login = () => {
@@ -13,14 +14,16 @@ const login = () => {
     try {
       const user = await UserService.getByName(req.body.name)
       if(!user) {
-          res.status(401).json({ message: 'Auth failed. No user found'});
-      } else if(user) {
-          if(!user.comparePassword(req.body.password, user.hashPassword)) {
-              res.status(401).json({ message: 'Auth failed. Wrong password'})
+          res.status(401).json({ message: 'Auth failed. No user found', success: false});
+      } else {
+        bcrypt.compare(req.body.password, user.hashPassword, (err, result) => {
+          if(!result) {
+            res.status(401).json({ message: 'Auth failed. Wrong password', success: false})
           } else {
-              const token = jsonwebtoken.sign({email: user.email, name: user.name, _id: user._id}, conf.costJWT);
-              return  res.cookie('accessToken', token, {maxAge: 360000, secure: false, httpOnly: true}).redirect('/')
-          }
+            const token = jsonwebtoken.sign({email: user.email, name: user.name, _id: user._id}, conf.costJWT);
+            return  res.status(200).cookie('accessToken', token, {maxAge: 360000, secure: false, httpOnly: true}).redirect('/');
+          }  
+        });
       }
     } catch (error) {
       res.status(400).json({ message: error})
@@ -35,12 +38,10 @@ const validate = (schema) => {
       const data = {name: req.body.name, password: req.body.password}
       const valid = ajv.validate(schema, data)
       if (!valid) {
-        res.status(401).json({ message: 'no valid'});
-        console.log(ajv.errors)
-      } else if(!req.body.password) {
-        res.status(401).json({ message: 'write password'})
-        console.log(ajv.errors)
-      }  else {
+        res.status(401).json({ message: 'enter name and password', success: false});
+        //console.log(ajv.errors)
+      } 
+      if(valid) {
         next();
       }
     } catch (error) {
