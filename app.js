@@ -5,11 +5,11 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const registerRouter = require('./routes/auth/register');
+const registrRouter = require('./routes/auth/registr');
 const forgotPasswordRouter = require('./routes/auth/forgotPassword');
 const loginRouter = require('./routes/auth/login');
 const adminRouter = require('./routes/admin');
-const loginService = require('./services/loginService');
+const loginController = require('./controller/loginController');
 
 const app = express();
 
@@ -27,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public/file/mc.exe', express.static(path.join(__dirname, 'public/file/mc.exe')));
 
 app.use('/login', loginRouter);
-app.use('/register', registerRouter); 
+app.use('/registr', registrRouter); 
 app.use('/forgotPassword', forgotPasswordRouter);
 
-app.use(loginService.loginService())
+app.use(loginController.loginController())
 
 app.use('/', indexRouter)
 app.use('/admin', adminRouter );
@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
+  console.error(err);
   // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = err;

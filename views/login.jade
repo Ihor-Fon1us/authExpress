@@ -13,23 +13,45 @@ html
     .container2
       .jumbotron
         br
-        form(action='/login' method='POST')
-          br
-          input.form-control(placeholder='Name' type='text' name='name')
-          br
-          input.form-control(placeholder='Password' type='text' name='password')
-          br
-          input.btn.btn-light(type='submit' value='Continue')
-        
-        button#register.btn.btn-link.btn-sm(type='button') Register
+        input#name.form-control(placeholder='Name' type='text' name='name')
+        br
+        input#password.form-control(placeholder='Password' type='text' name='password')
+        br
+        input#login.btn.btn-light(type='submit' value='Continue')
+        br
+        button#registr.btn.btn-link.btn-sm(type='button') Registr
         button#forgotPassword.btn.btn-link.btn-sm(type='button') Forgot your password?
     .container1
       .jumbotron
         p Fon1us
+    #enterPasswordOrLogin(class="modal fade")
+      div(class="modal-dialog")
+        div(class="modal-content")
+          div(class="modal-header")
+            input(class="modal-title" name="message" id="messageId" value="")
+    
     script.
-      $("#register").click(() => {
-        window.location.replace('/register');
+      $("#registr").click(() => {
+        window.location.replace('/registr');
       })
       $("#forgotPassword").click(() => {
         window.location.replace('/forgotPassword');
+      })
+      $("#login").click(() => {
+        $.ajax({
+          url: '/login',
+          type: 'POST',
+          data: {
+            name: $("#name").val(),
+            password: $("#password").val()
+          },
+          success: (data) => {
+            if(data.success == false) {
+              $("#enterPasswordOrLogin").modal('show');
+              $("#messageId").val(data.message);
+            } else {
+              window.location.replace('/');
+            }
+          }
+        });
       })

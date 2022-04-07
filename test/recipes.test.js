@@ -7,7 +7,8 @@ const bcrypt = require('bcrypt');
 
 
 let id;
-let token;
+let userToken;
+let adminToken;
 
 describe('test the recipes API', () => {
     beforeAll( async () => {
@@ -39,8 +40,8 @@ describe('test the recipes API', () => {
     })
     //test register 
 
-    describe('POST/register', () => {
-        it ('register user', async () => {
+    describe('POST/registr', () => {
+        it ('registr user', async () => {
             const user = {
                 name: 'admin',
                 email: 'ad@ad.com',
@@ -48,7 +49,7 @@ describe('test the recipes API', () => {
 
             };
             const res = await request (app)
-            .post('/register')
+            .post('/registr')
             .send(user);
             expect(res.statusCode).toEqual(200);
             expect(res.body).toEqual({success: true });
@@ -65,7 +66,7 @@ describe('test the recipes API', () => {
             const res = await request (app)
             .post('/login')
             .send(user);
-            token = res.header['set-cookie'][0].split(';')[0].split('=')[1];
+            adminToken = res.header['set-cookie'][0].split(';')[0].split('=')[1];
             expect(res.statusCode).toEqual(302);
             
         });
@@ -77,6 +78,7 @@ describe('test the recipes API', () => {
             const res = await request (app)
             .post('/login')
             .send(user);
+            userToken = res.header['set-cookie'][0].split(';')[0].split('=')[1];
             expect(res.statusCode).toEqual(302);
         });
         it ('authenticate missing password', async () => {
@@ -124,10 +126,16 @@ describe('test the recipes API', () => {
     });
 
     describe('availability index', () => {
-        it ('check availability', async () => {
+        it ('check availability index for not authorized user', async () => {
             const res = await request (app)
             .get('/');
             expect(res.statusCode).toEqual(302);
+        });
+        it ('check availability for authorized user', async () => {
+            const res = await request (app)
+            .get('/')
+            .set('cookie', [`accessToken=${userToken}`]);
+            expect(res.statusCode).toEqual(200);
         });
     });
 
@@ -135,14 +143,13 @@ describe('test the recipes API', () => {
         it ('check availability correct user', async () => {
             const res = await request (app)
             .get('/admin')
-            .set('cookie', [`accessToken=${token}`]);
+            .set('cookie', [`accessToken=${adminToken}`]);
             expect(res.statusCode).toEqual(200);
         });
-        it ('check availability wrong user', async () => {
-            const wrongtoken = 'wrongtoken' + token;
+        it ('check availability not correct user', async () => {
             const res = await request (app)
             .get('/admin')
-            .set('cookie', [`accessToken=${wrongtoken}`]);
+            .set('cookie', [`accessToken=${usertoken}`]);
             expect(res.statusCode).toEqual(302);
         });
     });

@@ -1,7 +1,7 @@
 const jsonwebtoken = require('jsonwebtoken');
 const conf = require('../bin/config/config');   
 
-function loginService() {
+function loginController() {
     return async (req, res, next) => {
         const token = req.cookies.accessToken;
         if (!token) {
@@ -14,10 +14,10 @@ function loginService() {
                 next();
             } catch (error) {
                 req.user = undefined;
-                next();
+                next(error);
             }
         }
     };
 }
 
-module.exports.loginService = loginService
+module.exports.loginController = loginController

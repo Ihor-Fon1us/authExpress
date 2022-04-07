@@ -24,7 +24,7 @@ router.route('/')
   }, userController.loginRequired(), (req, res, next) => {
     res.render('index', {title: 'Express'});
   })
-  .post(async (req, res, next) => {
+  .post(userController.loginRequired(), async (req, res, next) => {
     if(req.body.searchBtn) {
       //search
     } else if(req.body.home) {

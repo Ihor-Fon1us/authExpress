@@ -15,12 +15,12 @@ const validate = (schema) => {
       const data = {name: req.body.name, email: req.body.email, password: req.body.password}
       const valid = ajv.validate(schema, data)
       if (!valid) {
-        res.status(401).send('no valid')
+        res.status(401).json({success: false, message: 'no valid'});
         console.log(ajv.errors)
       } else if(searchEmail) {
-        res.send('email used')
+        res.status(200).json({success: false, type: 'email', message: 'Email already exists'});
       } else if(searchName) {
-        res.send('name used')
+        res.status(200).json({success: false, type: 'name', message: 'Name already exists'});
       } else {
         next()
       }
@@ -30,7 +30,7 @@ const validate = (schema) => {
   }
 }
 
-const register = () =>{
+const registr = () =>{
   return async (req, res) => {
     try {
       const user = await UserService.create(req.body);
@@ -49,9 +49,9 @@ const register = () =>{
 
 router.route('/')
   .get(async (req, res, next) => {
-    res.render('register', {title: 'Express' });
-    console.log(await UserService.getAll())
+    res.render('registr', {title: 'Express' });
+    //console.log(await UserService.getAll())
   })
-  .post(validate(validatorUserSchema.userSchema), register())
+  .post(validate(validatorUserSchema.userSchema), registr())
 
 module.exports = router
